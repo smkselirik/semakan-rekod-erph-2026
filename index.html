@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Semakan e-RPH 2026 - SMK Selirik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #800000; /* Maroon */
+            --secondary-color: #f8f9fa;
+            --accent-color: #d4af37; /* Gold/Elegant Text */
+            --text-dark: #333;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4a0000 0%, #800000 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        header {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 40px;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .school-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .school-info h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .school-info h2 {
+            margin: 5px 0 0;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 300;
+        }
+
+        /* Search Section */
+        .search-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-group {
+            display: flex;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 50px;
+            overflow: hidden;
+            background: white;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button.btn-search {
+            background: var(--accent-color);
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: background 0.3s;
+        }
+
+        button.btn-search:hover {
+            background: #fff;
+            color: var(--primary-color);
+        }
+
+        /* Result Section */
+        #result-area {
+            display: none; /* Hidden by default */
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .teacher-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .teacher-name {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .teacher-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .badge-jawatan {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Statistics Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #777;
+        }
+
+        /* Weeks Grid */
+        .weeks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 5px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-card.status-hantar {
+            border-left-color: #28a745; /* Green */
+        }
+        
+        .week-card.status-tidakhantar {
+            border-left-color: #dc3545; /* Red */
+        }
+        
+        .week-card.status-empty {
+            border-left-color: #ffc107; /* Yellow */
+        }
+
+        .week-header {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .week-date {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .week-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Loader */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Error Msg */
+        .error-msg {
+            color: #ffcccc;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="school-logo" id="headerLogo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="school-info">
+                <h1 id="schoolName">SMK SELIRIK</h1>
+                <h2>PORTAL e-RPH 2026</h2>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <h3 style="color:white; margin-bottom:15px; font-weight:300;">Semakan Rekod Penghantaran</h3>
+        <div class="input-group">
+            <input type="text" id="icInput" placeholder="Masukkan No. Kad Pengenalan Tanpa (-)">
+            <button class="btn-search" onclick="searchRecord()">SEMAK <i class="fas fa-search"></i></button>
+        </div>
+        <div class="loader" id="loader"></div>
+        <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <div id="result-area">
+        <div class="teacher-card">
+            <h2 class="teacher-name" id="dispName">Nama Guru</h2>
+            <div class="teacher-info">
+                <span><i class="fas fa-id-card"></i> <span id="dispIC"></span></span>
+                <span class="badge-jawatan" id="dispJawatan">Jawatan</span>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="statSent">0</div>
+                    <div class="stat-label">Bilangan Hantar</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="statNotSent">0</div>
+                    <div class="stat-label">Tidak Hantar</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="statPercent">0%</div>
+                    <div class="stat-label">Peratus</div>
+                </div>
+                <div class="stat-box" style="grid-column: span 3;">
+                    <div class="stat-value" id="statRemarks" style="font-size:1rem; font-weight:normal;">-</div>
+                    <div class="stat-label">Catatan</div>
+                </div>
+            </div>
+
+            <div class="weeks-container" id="weeksGrid">
+                </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; NDJE@Selirik, Kapit 2026 | Hak Cipta Terpelihara
+    </footer>
+
+    <script>
+        // --- KONFIGURASI ---
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSAfGkb0V0XOKhlyjNgHNeSTVoRO6tw8gorjTKVzJ9lqLwm_pL38utfOBJOu7yXBMszjk6m78XP_6f2/pub?gid=1853580490&single=true&output=csv';
+
+        // Konfigurasi Kolum (Mapping huruf Excel kepada struktur data)
+        // Nota: Fungsi 'col' di bawah akan tukar huruf ke nombor index (A=0, B=1, etc)
+        
+        function col(letter) {
+            let column = letter.toUpperCase();
+            let sum = 0;
+            for (let i = 0; i < column.length; i++) {
+                sum *= 26;
+                sum += (column.charCodeAt(i) - 'A'.charCodeAt(0) + 1);
+            }
+            return sum - 1;
+        }
+
+        // Mapping Data Asas
+        const COL_LOGO = col('A'); // Kolum A
+        const COL_IC = col('B');   // Kolum B
+        const COL_NAME = col('C'); // Kolum C
+        const COL_JAWATAN = col('D'); // Mengambil D sebagai default untuk Jawatan jika tidak dinyatakan (User boleh ubah sini)
+        
+        // Mapping Statistik
+        const COL_NOT_SENT = col('GG');
+        const COL_SENT = col('GH');
+        const COL_TOTAL_WEEKS = col('GI');
+        const COL_PERCENT = col('GJ');
+        const COL_REMARKS = col('GK');
+
+        // Mapping Mingguan (Berdasarkan Prompt Pengguna)
+        const weeklyConfig = [
+            { week: 1,  dateCol: col('F'),  statusCol: col('G'),  label: '30.01.2026' },
+            { week: 2,  dateCol: col('J'),  statusCol: col('K'),  label: '30.01.2026' },
+            { week: 3,  dateCol: col('N'),  statusCol: col('O'),  label: '30.01.2026' },
+            { week: 4,  dateCol: col('R'),  statusCol: col('S'),  label: '06.02.2026' },
+            { week: 5,  dateCol: col('V'),  statusCol: col('W') },
+            { week: 6,  dateCol: col('Z'),  statusCol: col('AA') },
+            { week: 7,  dateCol: null,      statusCol: col('AF') }, // Tiada tarikh hantar dinyatakan
+            { week: 8,  dateCol: col('AH'), statusCol: col('AI') },
+            { week: 9,  dateCol: col('AL'), statusCol: col('AM') },
+            { week: 10, dateCol: col('AP'), statusCol: col('AQ') },
+            { week: 11, dateCol: col('AT'), statusCol: col('AU') },
+            { week: 12, dateCol: col('AX'), statusCol: col('AY') },
+            { week: 13, dateCol: col('BC'), statusCol: col('BD') },
+            { week: 14, dateCol: col('BF'), statusCol: col('BG') },
+            { week: 15, dateCol: null,      statusCol: col('BL') }, // Tiada tarikh hantar dinyatakan
+            { week: 16, dateCol: col('BN'), statusCol: col('BO') },
+            { week: 17, dateCol: col('BR'), statusCol: col('BS') },
+            { week: 18, dateCol: col('BV'), statusCol: col('BW') },
+            { week: 19, dateCol: col('BZ'), statusCol: col('CA') },
+            { week: 20, dateCol: col('CD'), statusCol: col('CE') },
+            { week: 21, dateCol: col('CH'), statusCol: col('CI') },
+            { week: 22, dateCol: col('CL'), statusCol: col('CM') },
+            { week: 23, dateCol: col('CP'), statusCol: col('CQ') },
+            { week: 24, dateCol: col('CT'), statusCol: col('CU') },
+            { week: 25, dateCol: col('CX'), statusCol: col('CY') },
+            { week: 26, dateCol: col('DB'), statusCol: col('DC') },
+            { week: 27, dateCol: col('DF'), statusCol: col('DG') },
+            { week: 28, dateCol: col('DJ'), statusCol: col('DK') },
+            { week: 29, dateCol: col('DN'), statusCol: col('DO') },
+            { week: 30, dateCol: col('DR'), statusCol: col('DS') },
+            { week: 31, dateCol: col('DV'), statusCol: col('DW') },
+            { week: 32, dateCol: col('DZ'), statusCol: col('EA') },
+            { week: 33, dateCol: col('ED'), statusCol: col('EE') },
+            { week: 34, dateCol: col('EH'), statusCol: col('EI') },
+            { week: 35, dateCol: col('EL'), statusCol: col('EM') },
+            { week: 36, dateCol: col('EP'), statusCol: col('EQ') },
+            { week: 37, dateCol: col('ET'), statusCol: col('EU') },
+            { week: 38, dateCol: col('EX'), statusCol: col('EY') },
+            { week: 39, dateCol: col('FB'), statusCol: col('FC') },
+            { week: 40, dateCol: col('FF'), statusCol: col('FG') },
+            { week: 41, dateCol: col('FJ'), statusCol: col('FK') },
+            { week: 42, dateCol: col('FN'), statusCol: col('FO') }
+        ];
+
+        let csvData = [];
+
+        // --- FUNGSI UTAMA ---
+
+        async function fetchCSV() {
+            try {
+                const response = await fetch(SHEET_CSV_URL);
+                const text = await response.text();
+                csvData = parseCSV(text);
+                return true;
+            } catch (error) {
+                console.error("Gagal mengambil data:", error);
+                document.getElementById('errorMsg').innerText = "Ralat sistem: Gagal menyambung ke pangkalan data.";
+                document.getElementById('errorMsg').style.display = 'block';
+                return false;
+            }
+        }
+
+        // Simple CSV Parser (Handle basic comma split)
+        // Nota: Untuk data Google Sheet standard, split ',' biasanya memadai kecuali ada koma dalam cell.
+        function parseCSV(text) {
+            const rows = text.split('\n').map(row => {
+                // Regex ini mengendali koma di dalam quote "..."
+                const matches = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                return matches ? matches.map(m => m.replace(/^"|"$/g, '')) : row.split(',');
+            });
+            return rows;
+        }
+
+        async function searchRecord() {
+            const icInput = document.getElementById('icInput').value.trim();
+            const loader = document.getElementById('loader');
+            const resultArea = document.getElementById('result-area');
+            const errorMsg = document.getElementById('errorMsg');
+
+            // Reset UI
+            resultArea.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            if (!icInput) {
+                alert("Sila masukkan No Kad Pengenalan.");
+                return;
+            }
+
+            loader.style.display = 'block';
+
+            // Jika data belum ada, ambil dulu
+            if (csvData.length === 0) {
+                await fetchCSV();
+            }
+
+            // Cari Data
+            let foundRow = null;
+            // Mula loop dari baris 1 (index 1) untuk skip header jika ada, atau 0 jika tiada header
+            for (let i = 0; i < csvData.length; i++) {
+                // Check Column B (Index 1)
+                const rowIC = csvData[i][COL_IC] ? csvData[i][COL_IC].toString().trim() : "";
+                // Buang sebarang simbol '-' untuk perbandingan fleksibel
+                const cleanRowIC = rowIC.replace(/-/g, '');
+                const cleanInputIC = icInput.replace(/-/g, '');
+
+                if (cleanRowIC === cleanInputIC && cleanInputIC !== "") {
+                    foundRow = csvData[i];
+                    break;
+                }
+            }
+
+            loader.style.display = 'none';
+
+            if (foundRow) {
+                displayResult(foundRow);
+            } else {
+                errorMsg.innerText = "Maaf, No Kad Pengenalan tidak ditemui dalam rekod.";
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function displayResult(row) {
+            // Update Header Info
+            const logoUrl = row[COL_LOGO];
+            const logoDiv = document.getElementById('headerLogo');
+            
+            // Logic: Kalau Col A ada URL imej, guna itu. Kalau teks, paparkan sebagai nama sekolah tambahan atau abaikan.
+            if (logoUrl && (logoUrl.startsWith('http') || logoUrl.startsWith('data:image'))) {
+                logoDiv.innerHTML = `<img src="${logoUrl}" alt="Logo">`;
+            } else {
+                 // Guna default icon
+                 logoDiv.innerHTML = `<i class="fas fa-graduation-cap"></i>`;
+                 // Jika Col A ada teks (Nama Sekolah), mungkin update nama sekolah
+                 if(row[COL_LOGO] && row[COL_LOGO].length > 3) {
+                     document.getElementById('schoolName').innerText = row[COL_LOGO];
+                 }
+            }
+
+            document.getElementById('dispName').innerText = row[COL_NAME] || "Nama Tidak Dinyatakan";
+            document.getElementById('dispIC').innerText = row[COL_IC] || "-";
+            document.getElementById('dispJawatan').innerText = row[COL_JAWATAN] || "Guru";
+
+            // Update Stats
+            document.getElementById('statSent').innerText = row[COL_SENT] || "0";
+            document.getElementById('statNotSent').innerText = row[COL_NOT_SENT] || "0";
+            document.getElementById('statPercent').innerText = row[COL_PERCENT] || "0%";
+            document.getElementById('statRemarks').innerText = row[COL_REMARKS] || "-";
+
+            // Generate Weeks Cards
+            const weeksGrid = document.getElementById('weeksGrid');
+            weeksGrid.innerHTML = ''; // Clear lama
+
+            weeklyConfig.forEach(cfg => {
+                const dateVal = cfg.dateCol !== null ? (row[cfg.dateCol] || "-") : "-";
+                const statusVal = row[cfg.statusCol] || "Tiada Status";
+                
+                // Tentukan warna border berdasarkan status (case insensitive)
+                let statusClass = "status-empty";
+                const sLower = statusVal.toLowerCase();
+                if (sLower.includes("hantar") && !sLower.includes("tidak")) statusClass = "status-hantar";
+                else if (sLower.includes("tidak") || sLower.includes("gagal")) statusClass = "status-tidakhantar";
+
+                // Label Tarikh (Hardcoded dari prompt atau data sebenar)
+                let dateDisplay = cfg.label ? cfg.label : dateVal;
+                // Jika cfg.label tiada, dan data column ada data, guna data column.
+                // Jika prompt kata "Minggu 7", tiada column date, maka "-"
+                
+                // Logic Tarikh Hantar Sebenar vs Tarikh Wajib
+                // Paparan: "Hantar: [TarikhData]"
+                let dateHtml = cfg.dateCol !== null ? `<div><i class="far fa-calendar-alt"></i> ${dateVal}</div>` : `<div style="color:#ccc;">-</div>`;
+
+                const card = document.createElement('div');
+                card.className = `week-card ${statusClass}`;
+                card.innerHTML = `
+                    <div class="week-header">
+                        <span>Minggu ${cfg.week}</span>
+                        ${cfg.label ? `<span style="font-size:0.7em; opacity:0.7">${cfg.label}</span>` : ''}
+                    </div>
+                    <div class="week-date">
+                        ${dateHtml}
+                    </div>
+                    <div class="week-status" style="color: ${statusClass === 'status-hantar' ? 'green' : (statusClass === 'status-tidakhantar' ? 'red' : 'orange')}">
+                        ${statusVal}
+                    </div>
+                `;
+                weeksGrid.appendChild(card);
+            });
+
+            document.getElementById('result-area').style.display = 'block';
+            
+            // Scroll ke result
+            document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Trigger search dengan Enter key
+        document.getElementById('icInput').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchRecord();
+            }
+        });
+
+    </script>
+</body>
+</html>
